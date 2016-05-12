@@ -826,7 +826,7 @@ class TestHome(TestCase):
         assert self.get_pq()('#devhub-sidebar #editor-promo').length == 0
 
     def test_my_addons(self):
-        statuses = [(amo.STATUS_NOMINATED, amo.STATUS_NOMINATED),
+        statuses = [(amo.STATUS_NOMINATED, amo.STATUS_UNREVIEWED),
                     (amo.STATUS_PUBLIC, amo.STATUS_UNREVIEWED),
                     (amo.STATUS_LITE, amo.STATUS_UNREVIEWED)]
 
@@ -3472,15 +3472,6 @@ class TestRequestReview(TestCase):
         assert self.version.nomination is None
         self.check(amo.STATUS_LITE, self.public_url,
                    amo.STATUS_LITE_AND_NOMINATED)
-        self.assertCloseToNow(self.get_version().nomination)
-
-    def test_purgatory_to_lite(self):
-        self.check(amo.STATUS_PURGATORY, self.lite_url, amo.STATUS_UNREVIEWED)
-
-    def test_purgatory_to_public(self):
-        assert self.version.nomination is None
-        self.check(amo.STATUS_PURGATORY, self.public_url,
-                   amo.STATUS_NOMINATED)
         self.assertCloseToNow(self.get_version().nomination)
 
     def test_lite_and_nominated_to_public(self):
